@@ -4,14 +4,14 @@ export function FeaturedWindow() {
   return (
     <div className="retro-window relative w-[min(92vw,420px)]">
       <div className="retro-window-titlebar">
-        <button type="button" className="retro-close-btn" aria-label="Fermer">
-          ×
-        </button>
-        <span>{SITE.featuredTitle}</span>
         <div className="retro-window-controls" aria-hidden="true">
           <span className="retro-window-control" />
           <span className="retro-window-control" />
         </div>
+        <span>{SITE.featuredTitle}</span>
+        <button type="button" className="retro-close-btn" aria-label="Fermer">
+          ×
+        </button>
       </div>
 
       <div className="relative overflow-hidden bg-[var(--color-retro-blue)] p-6">

@@ -9,6 +9,7 @@
   --color-retro-grey: #c8c4bc;
   --color-retro-blue: #6ec4e8;
   --color-retro-mint: #7ee0b8;
+  --color-retro-project: #e85555;
   --font-retro: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
@@ -87,7 +88,7 @@ body,
 .retro-window-controls {
   display: flex;
   gap: 4px;
-  margin-left: auto;
+  flex-shrink: 0;
 }
 
 .retro-window-control {
@@ -104,6 +105,7 @@ body,
   width: 22px;
   height: 22px;
   flex-shrink: 0;
+  margin-left: auto;
   border: 2px solid var(--color-retro-black);
   background: var(--color-retro-white);
   font-size: 12px;

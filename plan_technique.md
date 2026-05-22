@@ -141,34 +141,26 @@ Renommer / simplifier `useWindowStore` → **`useDesktopStore`** :
 - Bureau plein écran, fond grille, menu bar jaune, dock, fenêtre d'accueil
 - Fichiers : `Desktop.tsx`, `MenuBar.tsx`, `Dock.tsx`, `FeaturedWindow.tsx`, `index.css`
 
-### Étape 2 — Refactor du store ✅ → 🔄 à adapter
+### Étape 2 — Refactor du store ✅ (fait)
 
-- **Fait :** store Zustand basique
-- **À faire :** migrer vers `useDesktopStore` avec le modèle `DesktopApp` (types `about`, `contact`, `external`, `project`), supprimer la logique fenêtres
+- `useDesktopStore` avec modèle `DesktopApp` (types `about`, `contact`, `external`, `project`)
+- `activeAppId`, `updateIconPosition`, `openApp`, `closeApp`, `resetIconPositions`
+- LinkedIn ouvre l'URL externe directement
+- Fichiers : `src/store/useDesktopStore.ts`, `src/types/desktop.ts`, `src/config/`
 
-**Prompt Cursor :**
-> Refactorise le store Zustand : renomme en `useDesktopStore`, modèle `DesktopApp` avec types about/contact/external/project. Gère `activeAppId` et `updateIconPosition`. Supprime minimize, z-index et cascade fenêtres.
+### Étape 3 — Icônes draggables sur le bureau ✅ (fait)
 
-### Étape 3 — Icônes draggables sur le bureau
+- Composant `DraggableDesktopIcon.tsx` avec `react-draggable`
+- `DesktopIconLayer.tsx` remplace l'ancienne sidebar fixe
+- Positions initiales dispersées dans `desktopApps.ts`
+- Double-clic (desktop) / simple clic (mobile) pour ouvrir ; drag sans ouverture accidentelle
 
-- **Objectif :** Icônes librement déplaçables sur tout le bureau, comme un vrai OS.
-- Composant `DraggableDesktopIcon` avec `react-draggable`
-- Positions initiales en grille/cascade dans `desktopApps.ts`
-- Double-clic (desktop) / simple clic (mobile) pour ouvrir
-- Les icônes ne sont plus figées dans une sidebar : elles sont éparpillées sur le bureau
+### Étape 4 — Panneau de contenu (non draggable) ✅ (fait)
 
-**Prompt Cursor :**
-> Rends les icônes du bureau draggables avec react-draggable. Sauvegarde X/Y dans useDesktopStore. Au clic, ouvre l'app selon son type.
-
-### Étape 4 — Panneau de contenu (non draggable)
-
-- **Objectif :** Afficher le contenu d'une app dans un panneau modal centré.
 - Composant `AppPanel.tsx` : barre titre rétro, bouton ×, zone scrollable
-- Rendu conditionnel selon `activeAppId` et le `type` de l'app
-- LinkedIn (`type: external`) : pas de panneau — `window.open(url)` directement
-
-**Prompt Cursor :**
-> Crée AppPanel.tsx, panneau modal centré non draggable. Lie-le à activeAppId. Bouton fermer appelle closeApp().
+- Lié à `activeAppId` ; fermeture via × ou Escape
+- Placeholders par type (`about`, `contact`, `project`) — contenu riche à l'étape 5
+- `FeaturedWindow` masquée quand un panneau est ouvert
 
 ### Étape 5 — Contenu des applications
 
@@ -240,7 +232,7 @@ src/
 
 ## 7. Prochaine action recommandée
 
-**Étape 2 (refactor store)** puis **Étape 3 (icônes draggables)** — c'est le cœur de l'expérience bureau que tu décris.
+**Étape 5 (contenu des applications)** — créer `AboutPanel`, `ContactPanel`, `ProjectPanel` et remplacer les placeholders de `AppPanel`.
 
 Exemple de contenu initial pour `projects.ts` (à compléter par toi) :
 

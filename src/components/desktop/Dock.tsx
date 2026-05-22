@@ -1,5 +1,10 @@
 import type { ReactNode } from 'react'
-import { useWindowStore } from '../../store/useWindowStore'
+import homeIcon from '@images/home.png'
+import restoreIcon from '@images/restore.png'
+import aboutIcon from '@images/about.png'
+import projectsIcon from '@images/projects.png'
+import { useDesktopStore } from '../../store/useDesktopStore'
+import { DockSettingsIcon } from './DockSettingsIcon'
 
 interface DockIconShapeProps {
   className?: string
@@ -19,6 +24,14 @@ function DockIconShape({ className, style, children }: DockIconShapeProps) {
   )
 }
 
+function DockImageIcon({ src, alt }: { src: string; alt: string }) {
+  return (
+    <DockIconShape className="bg-[var(--color-retro-yellow)]">
+      <img src={src} alt={alt} className="h-7 w-7 object-contain" draggable={false} />
+    </DockIconShape>
+  )
+}
+
 interface DockIconProps {
   label: string
   appId?: string
@@ -27,8 +40,8 @@ interface DockIconProps {
 }
 
 function DockIcon({ label, appId, onClick, children }: DockIconProps) {
-  const openWindow = useWindowStore((state) => state.openWindow)
-  const closeAll = useWindowStore((state) => state.closeAll)
+  const openApp = useDesktopStore((state) => state.openApp)
+  const resetDesktop = useDesktopStore((state) => state.resetDesktop)
 
   const handleClick = () => {
     if (onClick) {
@@ -36,10 +49,10 @@ function DockIcon({ label, appId, onClick, children }: DockIconProps) {
       return
     }
     if (appId === 'home') {
-      closeAll()
+      resetDesktop()
       return
     }
-    if (appId && appId !== 'trash') openWindow(appId)
+    if (appId) openApp(appId)
   }
 
   return (
@@ -51,33 +64,34 @@ function DockIcon({ label, appId, onClick, children }: DockIconProps) {
 }
 
 export function Dock() {
+  const firstProjectId = useDesktopStore((state) =>
+    state.apps.find((app) => app.type === 'project')?.id,
+  )
+  const resetIconPositions = useDesktopStore((state) => state.resetIconPositions)
+
   return (
     <footer className="absolute bottom-0 left-0 right-0 z-30 flex flex-col items-center pb-3">
       <div className="flex items-end gap-1 px-4 sm:gap-2">
         <DockIcon label="Home" appId="home">
-          <DockIconShape className="rounded-full bg-[var(--color-retro-black)]" />
+          <DockImageIcon src={homeIcon} alt="" />
         </DockIcon>
-        <DockIcon label="Mail" appId="contact">
-          <DockIconShape className="bg-[var(--color-retro-yellow)]">
-            <div className="h-0 w-0 border-x-[8px] border-b-[6px] border-x-transparent border-b-[var(--color-retro-black)]" />
-          </DockIconShape>
+        <DockIcon label="Restore" onClick={() => resetIconPositions()}>
+          <DockImageIcon src={restoreIcon} alt="" />
         </DockIcon>
-        <DockIcon label="Projects" appId="portfolio">
-          <DockIconShape className="rounded-full bg-[#e85555]" />
-        </DockIcon>
+        {firstProjectId && (
+          <DockIcon label="Projects" appId={firstProjectId}>
+            <DockImageIcon src={projectsIcon} alt="" />
+          </DockIcon>
+        )}
         <DockIcon label="About" appId="about">
-          <DockIconShape className="rounded-full bg-[var(--color-retro-blue)]">
-            <div className="h-3 w-3 rounded-full border-2 border-[var(--color-retro-black)] bg-white" />
+          <DockImageIcon src={aboutIcon} alt="" />
+        </DockIcon>
+        <DockIcon label="LinkedIn" appId="linkedin">
+          <DockIconShape className="bg-[var(--color-retro-yellow)] text-[10px] font-extrabold">
+            in
           </DockIconShape>
         </DockIcon>
-        <DockIcon label="Settings" appId="settings">
-          <DockIconShape className="bg-[var(--color-retro-grey)]">
-            <div className="h-3 w-3 rounded-full border-2 border-[var(--color-retro-black)]" />
-          </DockIconShape>
-        </DockIcon>
-        <DockIcon label="Trash" appId="trash">
-          <DockIconShape className="bg-[var(--color-retro-mint)]" />
-        </DockIcon>
+        <DockSettingsIcon />
       </div>
       <div className="retro-dock-shelf mt-1 w-[min(90vw,520px)]" aria-hidden="true" />
     </footer>

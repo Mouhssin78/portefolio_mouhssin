@@ -1,14 +1,7 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { SITE } from '../../config/site'
 import { useClock } from '../../hooks/useClock'
-import { useWindowStore } from '../../store/useWindowStore'
-
-const FILE_ITEMS = [
-  { label: 'About', appId: 'about' },
-  { label: 'Projects', appId: 'portfolio' },
-] as const
-
-const CONTACT_ITEMS = [{ label: 'Email', appId: 'contact' }] as const
+import { useDesktopStore } from '../../store/useDesktopStore'
 
 function MenuDropdown({
   label,
@@ -54,7 +47,24 @@ function MenuDropdown({
 
 export function MenuBar() {
   const clock = useClock()
-  const openWindow = useWindowStore((state) => state.openWindow)
+  const apps = useDesktopStore((state) => state.apps)
+  const openApp = useDesktopStore((state) => state.openApp)
+
+  const fileItems = useMemo(() => {
+    const about = { label: 'About', appId: 'about' }
+    const projects = apps
+      .filter((app) => app.type === 'project')
+      .map((app) => ({ label: app.title, appId: app.id }))
+    return [about, ...projects]
+  }, [apps])
+
+  const contactItems = useMemo(
+    () => [
+      { label: 'Email', appId: 'contact' },
+      { label: 'LinkedIn', appId: 'linkedin' },
+    ],
+    [],
+  )
 
   return (
     <header className="retro-menu-bar relative z-50 flex h-9 shrink-0 items-center justify-between px-3">
@@ -65,15 +75,8 @@ export function MenuBar() {
         />
         <span className="text-[13px] font-bold tracking-tight">{SITE.name}</span>
         <nav className="ml-2 flex items-center">
-          <MenuDropdown label="File" items={FILE_ITEMS} onSelect={openWindow} />
-          <MenuDropdown label="Contact" items={CONTACT_ITEMS} onSelect={openWindow} />
-          <button
-            type="button"
-            className="retro-menu-item"
-            onClick={() => openWindow('settings')}
-          >
-            Settings
-          </button>
+          <MenuDropdown label="File" items={fileItems} onSelect={openApp} />
+          <MenuDropdown label="Contact" items={contactItems} onSelect={openApp} />
         </nav>
       </div>
 

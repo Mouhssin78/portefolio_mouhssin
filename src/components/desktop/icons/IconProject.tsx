@@ -1,9 +1,9 @@
-import aboutIcon from '@images/about.png'
+import projectsIcon from '@images/projects.png'
 
-export function IconAbout() {
+export function IconProject() {
   return (
     <img
-      src={aboutIcon}
+      src={projectsIcon}
       alt=""
       width={52}
       height={52}

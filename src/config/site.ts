@@ -1,6 +1,7 @@
 export const SITE = {
   name: 'Mouhssin RABIHI',
-  email: 'hello@mouhssin-rabihi.com',
-  tagline: 'Développeur full-stack',
+  email: 'mouhssin.rabihi@gmail.com',
+  tagline: 'Ingénieur Data et IA',
   featuredTitle: 'Bienvenue',
+  linkedinUrl: 'https://www.linkedin.com/in/mouhssin-rabihi',
 } as const
