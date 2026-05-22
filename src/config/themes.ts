@@ -1,4 +1,4 @@
-export type ThemeId = 'classic' | 'mac84' | 'teal' | 'bubblegum'
+export type ThemeId = 'classic' | 'mac84' | 'teal' | 'bubblegum' | 'galaxy'
 
 export interface RetroTheme {
   id: ThemeId
@@ -67,8 +67,8 @@ export const RETRO_THEMES: RetroTheme[] = [
     },
   },
   {
-    id: 'bubblegum',
-    name: 'Bubblegum',
+    id: 'galaxy',
+    name: 'Galaxy',
     description: 'Rose et lavande — pop art des années 90.',
     colors: {
       '--color-retro-bg': '#e8d4e0',
@@ -82,12 +82,28 @@ export const RETRO_THEMES: RetroTheme[] = [
       '--color-retro-project': '#9888e8',
     },
   },
+  {
+    id: 'bubblegum',
+    name: 'Bubblegum',
+    description: 'Violets cosmiques et nébuleuses — bureau spatial rétro.',
+    colors: {
+      '--color-retro-bg': '#dcd4f4',
+      '--color-retro-grid': '#b0a0d8',
+      '--color-retro-yellow': '#9078e8',
+      '--color-retro-black': '#140828',
+      '--color-retro-white': '#f4f0ff',
+      '--color-retro-grey': '#c4b4e8',
+      '--color-retro-blue': '#6888f8',
+      '--color-retro-mint': '#78d8f8',
+      '--color-retro-project': '#f060c8',
+    },
+  },
 ]
 
 export const DEFAULT_THEME_ID: ThemeId = 'classic'
 
 export function getAlternativeThemes(currentId: ThemeId): RetroTheme[] {
-  return RETRO_THEMES.filter((theme) => theme.id !== currentId).slice(0, 3)
+  return RETRO_THEMES.filter((theme) => theme.id !== currentId)
 }
 
 export function getThemeById(id: ThemeId): RetroTheme {

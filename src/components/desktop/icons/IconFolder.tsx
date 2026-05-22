@@ -3,9 +3,10 @@ interface IconFolderProps {
   size?: number
 }
 
+export const DESKTOP_ICON_YELLOW = '#f7d046'
 export const PROJECT_FOLDER_FILL = 'var(--color-retro-project)'
 
-export function IconFolder({ fill = '#f7d046', size = 52 }: IconFolderProps) {
+export function IconFolder({ fill = DESKTOP_ICON_YELLOW, size = 52 }: IconFolderProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 52 52" aria-hidden="true">
       <path
