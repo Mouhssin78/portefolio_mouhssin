@@ -56,7 +56,7 @@ export function buildDesktopApps(): DesktopApp[] {
       id: `project-${project.slug}`,
       type: 'project' as const,
       title: project.title,
-      icon: 'project-default',
+      icon: project.icon ?? 'project-default',
       project,
     }),
   )

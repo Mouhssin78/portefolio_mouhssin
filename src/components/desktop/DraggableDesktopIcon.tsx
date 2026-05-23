@@ -18,7 +18,9 @@ export function DraggableDesktopIcon({ app }: DraggableDesktopIconProps) {
   const openApp = useDesktopStore((state) => state.openApp)
   const updateIconPosition = useDesktopStore((state) => state.updateIconPosition)
 
-  const Icon = getIconComponent(app.icon)
+  const isImageIcon =
+    app.icon.startsWith('/') || app.icon.startsWith('http://') || app.icon.startsWith('https://')
+  const Icon = isImageIcon ? null : getIconComponent(app.icon)
 
   const handleOpen = () => {
     if (!wasDraggedRef.current) {
@@ -56,7 +58,11 @@ export function DraggableDesktopIcon({ app }: DraggableDesktopIconProps) {
           event.currentTarget.focus()
         }}
       >
-        <Icon />
+        {isImageIcon ? (
+          <img src={app.icon} alt="" width={52} height={52} className="object-contain" draggable={false} />
+        ) : (
+          Icon && <Icon />
+        )}
         <span className="retro-icon-label">{app.title}</span>
       </button>
     </Draggable>

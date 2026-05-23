@@ -5,6 +5,12 @@ export interface Position {
   y: number
 }
 
+export interface PanelState {
+  position: Position
+  isMaximized: boolean
+  savedPosition: Position | null
+}
+
 export interface ProjectDetail {
   slug: string
   title: string
@@ -13,6 +19,8 @@ export interface ProjectDetail {
   technologies: string[]
   links?: { label: string; url: string }[]
   image?: string
+  /** Clé d'icône SVG (`project-default`) ou chemin asset (`/icons/...`). */
+  icon?: string
 }
 
 export interface DesktopApp {
