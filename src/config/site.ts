@@ -13,6 +13,12 @@ export const SITE = {
     personalProjectsIntro: `Des projets menés de bout en bout, de la recherche de données au déploiement, sur des problématiques variées : cybersécurité IA, vision par ordinateur, IoT industriel et pilotage financier.`,
     professionalProjectsIntro: `Trois expériences en entreprise, de l'analyse de données et de l'automatisation à la conception d'agents IA en production.`,
     interests: ['Agents IA', 'Automatisation', 'Data Engineering', 'Monitoring'],
+    highlights: [
+      'Agent RCA réseau déployé en production chez SFR (LangChain, RAG, MCP).',
+      '25 h de gain mensuel via un agent IA génératif à la Banque de Luxembourg.',
+      'Eclusia : détection PII en temps réel sur les prompts IA, exécution locale (ONNX).',
+      'CleanCity : détection de déchets pour la ville de Nanterre (concours Kesk\'IA).',
+    ],
   },
   skills: [
     'Python',
