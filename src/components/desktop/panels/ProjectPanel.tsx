@@ -6,7 +6,10 @@ import { ProjectGallery } from './ProjectGallery'
 
 function isImageIcon(icon: string): boolean {
   return (
-    icon.startsWith('/') || icon.startsWith('http://') || icon.startsWith('https://')
+    icon.startsWith('/') ||
+    icon.startsWith('data:') ||
+    icon.startsWith('http://') ||
+    icon.startsWith('https://')
   )
 }
 

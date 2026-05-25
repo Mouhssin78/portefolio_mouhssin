@@ -10,7 +10,10 @@ export function MobileDesktopIcon({ app }: MobileDesktopIconProps) {
   const openApp = useDesktopStore((state) => state.openApp)
 
   const isImageIcon =
-    app.icon.startsWith('/') || app.icon.startsWith('http://') || app.icon.startsWith('https://')
+    app.icon.startsWith('/') ||
+    app.icon.startsWith('data:') ||
+    app.icon.startsWith('http://') ||
+    app.icon.startsWith('https://')
   const Icon = isImageIcon ? null : getIconComponent(app.icon)
 
   return (
