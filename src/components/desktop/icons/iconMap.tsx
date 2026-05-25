@@ -1,6 +1,7 @@
 import type { ComponentType } from 'react'
 import { IconAbout } from './IconAbout'
 import { IconFolderDesktop } from './IconFolderDesktop'
+import { IconFolderInternship } from './IconFolderInternship'
 import { IconLinkedIn } from './IconLinkedIn'
 import { IconMail } from './IconMail'
 
@@ -9,6 +10,7 @@ const ICON_MAP: Record<string, ComponentType> = {
   contact: IconMail,
   linkedin: IconLinkedIn,
   'project-default': IconFolderDesktop,
+  'internship-default': IconFolderInternship,
 }
 
 export function getIconComponent(iconKey: string): ComponentType {

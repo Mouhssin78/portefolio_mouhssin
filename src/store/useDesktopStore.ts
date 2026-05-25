@@ -16,6 +16,7 @@ interface DesktopStore {
   closeApp: () => void
   updateIconPosition: (id: string, x: number, y: number) => void
   resetIconPositions: () => void
+  stopButtonResetCount: number
   resetDesktop: () => void
   getAppById: (id: string) => DesktopApp | undefined
   setPanelPosition: (x: number, y: number) => void
@@ -27,6 +28,7 @@ export const useDesktopStore = create<DesktopStore>((set, get) => ({
   apps: buildDesktopApps(),
   activeAppId: null,
   panelState: defaultPanelState,
+  stopButtonResetCount: 0,
 
   openApp: (id) => {
     const app = get().apps.find((entry) => entry.id === id)
@@ -58,6 +60,7 @@ export const useDesktopStore = create<DesktopStore>((set, get) => ({
         ...app,
         position: { ...app.defaultPosition },
       })),
+      stopButtonResetCount: state.stopButtonResetCount + 1,
     }))
   },
 

@@ -15,6 +15,7 @@ function PanelContent({ app }: { app: DesktopApp }) {
     case 'contact':
       return <ContactPanel />
     case 'project':
+    case 'internship':
       if (!app.project) return null
       return <ProjectPanel project={app.project} />
     default:

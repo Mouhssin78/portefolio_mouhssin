@@ -1,4 +1,4 @@
-export type AppType = 'about' | 'contact' | 'external' | 'project'
+export type AppType = 'about' | 'contact' | 'external' | 'project' | 'internship'
 
 export interface Position {
   x: number
@@ -18,9 +18,18 @@ export interface ProjectDetail {
   longDescription: string
   technologies: string[]
   links?: { label: string; url: string }[]
-  image?: string
+  images?: string[]
+  /** Lieu et période (stages uniquement). */
+  period?: {
+    location?: string
+    from: string
+    to: string
+    duration: string
+  }
   /** Clé d'icône SVG (`project-default`) ou chemin asset (`/icons/...`). */
   icon?: string
+  /** Décalage optionnel de l'icône sur le bureau (px). */
+  iconOffset?: Partial<Position>
 }
 
 export interface DesktopApp {

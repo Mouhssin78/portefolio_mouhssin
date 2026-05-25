@@ -1,6 +1,29 @@
 import type { ProjectDetail } from '../../../types/desktop'
 import { IconFolder, PROJECT_FOLDER_FILL } from '../icons/IconFolder'
+import { getIconComponent } from '../icons/iconMap'
 import { getTagAccent, PanelSection } from './PanelSection'
+import { ProjectGallery } from './ProjectGallery'
+
+function isImageIcon(icon: string): boolean {
+  return (
+    icon.startsWith('/') || icon.startsWith('http://') || icon.startsWith('https://')
+  )
+}
+
+function PanelHeaderIcon({ icon }: { icon?: string }) {
+  if (icon && isImageIcon(icon)) {
+    return (
+      <img src={icon} alt="" width={52} height={52} className="object-contain" draggable={false} />
+    )
+  }
+
+  if (icon) {
+    const Icon = getIconComponent(icon)
+    return <Icon />
+  }
+
+  return <IconFolder fill={PROJECT_FOLDER_FILL} />
+}
 
 function RetroLinkButton({ label, url }: { label: string; url: string }) {
   return (
@@ -88,21 +111,21 @@ export function ProjectPanel({ project }: { project: ProjectDetail }) {
     <article>
       <header className="retro-panel-hero flex items-start gap-3">
         <div className="retro-border shrink-0 bg-[var(--color-retro-white)] p-1">
-          <IconFolder fill={PROJECT_FOLDER_FILL} />
+          <PanelHeaderIcon icon={project.icon} />
         </div>
         <div className="min-w-0 pt-0.5">
           <h2 className="text-lg font-extrabold leading-tight">{project.title}</h2>
           <p className="mt-1 text-sm font-medium leading-snug">{project.shortDescription}</p>
+          {project.period && (
+            <p className="mt-1.5 text-sm font-bold leading-snug">
+              {project.period.location ? `${project.period.location}, ` : ''}
+              {project.period.from} – {project.period.to} ({project.period.duration})
+            </p>
+          )}
         </div>
       </header>
 
-      {project.image && (
-        <img
-          src={project.image}
-          alt={`Aperçu — ${project.title}`}
-          className="retro-border retro-shadow mb-4 aspect-[16/9] w-full object-cover"
-        />
-      )}
+      <ProjectGallery images={project.images ?? []} title={project.title} />
 
       <PanelSection title="Description" accent="blue">
         <DescriptionContent text={project.longDescription} />
