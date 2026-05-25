@@ -84,7 +84,7 @@ export function DockSettingsIcon() {
 
       <button
         type="button"
-        className="retro-dock-item"
+        className="retro-dock-item touch-manipulation"
         title="Settings"
         aria-expanded={open}
         aria-haspopup="menu"

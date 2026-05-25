@@ -326,6 +326,9 @@ body,
   border: 2px solid transparent;
   padding: 6px 4px;
   transition: background 0.15s;
+  background: transparent;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .retro-icon-tile:hover {
@@ -364,6 +367,9 @@ body,
   border: 2px solid transparent;
   padding: 4px 6px;
   transition: transform 0.15s;
+  background: transparent;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .retro-dock-item:hover {
@@ -539,4 +545,18 @@ body,
     10% 52%,
     2% 36%
   );
+}
+
+@media (pointer: coarse) {
+  .desktop-wallpaper-heading {
+    display: none;
+  }
+
+  .retro-icon-tile {
+    width: auto;
+  }
+
+  .retro-dock-item:hover {
+    transform: none;
+  }
 }

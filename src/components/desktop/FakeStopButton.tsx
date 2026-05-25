@@ -1,21 +1,29 @@
 import { useCallback, useLayoutEffect, useRef, useState } from 'react'
+import { useCoarsePointer } from '../../hooks/useCoarsePointer'
 import { useDesktopStore } from '../../store/useDesktopStore'
 import { findSafeFleePosition } from '../../utils/findSafeFleePosition'
-
 const IDLE_MS = 150
-const INITIAL_LEFT = 8
-const INITIAL_BOTTOM_OFFSET = 80
+const HOME_GAP = 4
 
 function computeInitialPosition(boundsEl: HTMLElement, button: HTMLElement) {
-  const boundsHeight = boundsEl.getBoundingClientRect().height
+  const bounds = boundsEl.getBoundingClientRect()
   const buttonHeight = button.getBoundingClientRect().height
-  return {
-    x: INITIAL_LEFT,
-    y: boundsHeight - INITIAL_BOTTOM_OFFSET - buttonHeight,
+  const homeEl = boundsEl.querySelector('[data-dock-home]')
+
+  if (homeEl instanceof HTMLElement) {
+    const homeRect = homeEl.getBoundingClientRect()
+    const buttonWidth = button.getBoundingClientRect().width
+    return {
+      x: homeRect.left - bounds.left - buttonWidth - HOME_GAP,
+      y: homeRect.top - bounds.top + (homeRect.height - buttonHeight) / 2,
+    }
   }
+
+  return { x: 8, y: bounds.height - 80 - buttonHeight }
 }
 
 export function FakeStopButton() {
+  const isCoarsePointer = useCoarsePointer()
   const containerRef = useRef<HTMLDivElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
   const idleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -93,6 +101,8 @@ export function FakeStopButton() {
   const handlePointerLeave = () => {
     clearIdleTimer()
   }
+
+  if (isCoarsePointer) return null
 
   return (
     <div

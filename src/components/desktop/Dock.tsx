@@ -56,7 +56,13 @@ function DockIcon({ label, appId, onClick, children }: DockIconProps) {
   }
 
   return (
-    <button type="button" className="retro-dock-item" onClick={handleClick} title={label}>
+    <button
+      type="button"
+      className="retro-dock-item touch-manipulation"
+      onClick={handleClick}
+      title={label}
+      {...(appId === 'home' ? { 'data-dock-home': '' } : {})}
+    >
       {children}
       <span className="retro-dock-item-label">{label}</span>
     </button>
@@ -70,7 +76,7 @@ export function Dock() {
   const resetIconPositions = useDesktopStore((state) => state.resetIconPositions)
 
   return (
-    <footer className="absolute bottom-0 left-0 right-0 z-30 flex flex-col items-center pb-3">
+    <footer className="absolute bottom-0 left-0 right-0 z-40 flex flex-col items-center pb-3">
       <div className="flex items-end gap-1 px-4 sm:gap-2">
         <DockIcon label="Home" appId="home">
           <DockImageIcon src={homeIcon} alt="" />

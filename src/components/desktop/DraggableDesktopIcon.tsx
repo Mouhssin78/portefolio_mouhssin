@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import Draggable from 'react-draggable'
+import { useCoarsePointer } from '../../hooks/useCoarsePointer'
 import { useDesktopStore } from '../../store/useDesktopStore'
 import type { DesktopApp } from '../../types/desktop'
 import { getIconComponent } from './icons/iconMap'
@@ -11,6 +12,7 @@ interface DraggableDesktopIconProps {
 }
 
 export function DraggableDesktopIcon({ app }: DraggableDesktopIconProps) {
+  const isCoarsePointer = useCoarsePointer()
   const nodeRef = useRef<HTMLButtonElement>(null)
   const startPosRef = useRef({ x: 0, y: 0 })
   const wasDraggedRef = useRef(false)
@@ -33,6 +35,7 @@ export function DraggableDesktopIcon({ app }: DraggableDesktopIconProps) {
       nodeRef={nodeRef}
       position={app.position}
       bounds="parent"
+      disabled={isCoarsePointer}
       onStart={(_, data) => {
         startPosRef.current = { x: data.x, y: data.y }
         wasDraggedRef.current = false
@@ -51,12 +54,15 @@ export function DraggableDesktopIcon({ app }: DraggableDesktopIconProps) {
       <button
         ref={nodeRef}
         type="button"
-        className="retro-icon-tile absolute left-0 top-0 touch-none"
-        onDoubleClick={handleOpen}
-        onClick={(event) => {
-          if (window.matchMedia('(pointer: coarse)').matches) handleOpen()
-          event.currentTarget.focus()
-        }}
+        className={`retro-icon-tile absolute left-0 top-0 ${isCoarsePointer ? 'touch-manipulation' : 'touch-none'}`}
+        onDoubleClick={isCoarsePointer ? undefined : handleOpen}
+        onClick={
+          isCoarsePointer
+            ? handleOpen
+            : (event) => {
+                event.currentTarget.focus()
+              }
+        }
       >
         {isImageIcon ? (
           <img src={app.icon} alt="" width={52} height={52} className="object-contain" draggable={false} />

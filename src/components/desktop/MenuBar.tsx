@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { SITE } from '../../config/site'
 import { useClock } from '../../hooks/useClock'
+import { useCoarsePointer } from '../../hooks/useCoarsePointer'
 import { useDesktopStore } from '../../store/useDesktopStore'
 
 function MenuDropdown({
@@ -12,15 +13,22 @@ function MenuDropdown({
   items: readonly { label: string; appId: string }[]
   onSelect: (appId: string) => void
 }) {
+  const isCoarsePointer = useCoarsePointer()
   const [open, setOpen] = useState(false)
 
   return (
     <div
       className="relative"
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
+      onMouseEnter={isCoarsePointer ? undefined : () => setOpen(true)}
+      onMouseLeave={isCoarsePointer ? undefined : () => setOpen(false)}
     >
-      <button type="button" className="retro-menu-item">
+      <button
+        type="button"
+        className="retro-menu-item touch-manipulation"
+        aria-expanded={open}
+        aria-haspopup="menu"
+        onClick={isCoarsePointer ? () => setOpen((value) => !value) : undefined}
+      >
         {label}
       </button>
       {open && (
@@ -29,7 +37,7 @@ function MenuDropdown({
             <li key={item.appId}>
               <button
                 type="button"
-                className="block w-full px-3 py-1.5 text-left text-[13px] font-semibold hover:bg-[var(--color-retro-yellow)]"
+                className="block w-full touch-manipulation px-3 py-1.5 text-left text-[13px] font-semibold hover:bg-[var(--color-retro-yellow)]"
                 onClick={() => {
                   onSelect(item.appId)
                   setOpen(false)
