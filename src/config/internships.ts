@@ -1,6 +1,12 @@
 import type { ProjectDetail } from '../types/desktop'
 
 import bdlLogo from '@images/bdl.png'
+import bdlImage1 from '@images/projets/BDL/Image1.png'
+import bdlImage2 from '@images/projets/BDL/Image2.png'
+import bdlImage3 from '@images/projets/BDL/Image3.png'
+import bdlImage4 from '@images/projets/BDL/Image4.png'
+import bdlPipeline1 from '@images/projets/BDL/pipeline1.png'
+import bdlPipeline2 from '@images/projets/BDL/pipeline2.png'
 import iritelLogo from '@images/iritel.png'
 import sfrLogo from '@images/SFR.png'
 
@@ -59,6 +65,7 @@ Exemples de projets :
 2. Workflow d'automatisation (mouvement de métaux précieux)
 3. Agent IA pour l'analyse et le traitement de données`,
     technologies: ['Python', 'SQL', 'Qlik Sense', 'Power BI', 'Alteryx', 'Avaloq', 'API'],
+    images: [bdlImage1, bdlImage2, bdlImage3, bdlImage4, bdlPipeline1, bdlPipeline2],
     icon: bdlLogo,
     iconOffset: { y: 16 },
   },
